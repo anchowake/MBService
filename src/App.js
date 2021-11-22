@@ -32,12 +32,13 @@ function App() {
     };
 
     /* Getting Blocke by CORS */
-    // let response = await Axios(options);
-    // let responseOK = response && response.status === 200 && response.statusText === 'OK';
-    // if (responseOK) {
-    //   let data = await response.data;
-    //   console.log(data)
-    // }
+    let response = await Axios(options);
+    let responseOK = response && response.status === 200 && response.statusText === 'OK';
+    if (responseOK) {
+      let data = await response.data;
+      console.log('Quick Test')
+      console.log(data)
+    }
 
     //console.log(movementsData)
 
