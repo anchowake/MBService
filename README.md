@@ -7,7 +7,9 @@
 
 ## Project Files (Windows Only): 
 
-[https://drive.google.com/file/d/1tKV3krqyKkr05mteFLBf9gKJYJxn97q3/view?usp=sharing](https://drive.google.com/file/d/1tKV3krqyKkr05mteFLBf9gKJYJxn97q3/view?usp=sharing)
+Download the files and execute the **MetaBank.exe** file inside
+
+- [https://drive.google.com/file/d/1tKV3krqyKkr05mteFLBf9gKJYJxn97q3/view?usp=sharing](https://drive.google.com/file/d/1tKV3krqyKkr05mteFLBf9gKJYJxn97q3/view?usp=sharing)
 
 # Controls
 
