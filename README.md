@@ -25,7 +25,7 @@ Download the files and execute the **MetaBank.exe** file inside
 - **Keyboard** - You can type in the text fields that are in the dashboard
 
 # TODO
-
+- Base VR Env - Done
 - Login Form - DONE
 - Select Account to Display Component - DONE
 - Expenses by Category - WIP
