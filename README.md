@@ -22,3 +22,13 @@ Download the files and execute the **MetaBank.exe** file inside
 ## Close to the Display
 
 - **Mouse** - Interact with Dashboard, *If you walk closer to the screen you can interact with the dashboard*
+- **Keyboard** - You can type in the text fields that are in the dashboard
+
+# TODO
+
+- Login Form - DONE
+- Select Account to Display Component - DONE
+- Expenses by Category - WIP
+- Saving Tips 
+- Polish VR Env
+- Discord BUTLR (Nice to have)
