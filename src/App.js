@@ -309,8 +309,8 @@ function App() {
 
     return (
       <>
-        <h2>Your TOP Categories</h2>
-        <p>Income: {incomeData.toLocaleString('default', currencyOptions)}</p>
+        <h2>Your awesome dashboard - MetaBank</h2>
+        <p>Transactions received: {incomeData.toLocaleString('default', currencyOptions)}</p>
         <div className="table-container">
           <table className="table">
             <thead>
