@@ -5,11 +5,17 @@
 
 **TLDR**: A VR / Metaverse Bank Dashboard.
 
+![MetaBank](https://lh6.googleusercontent.com/1kgbQRg5nGNbN_IwK4jng-VE_269TKkIBjgtNvjBBrfuiAwSCcEX5vQrcC7OYcgbLSrQUaZb25Q-VGq67BKQ=w2560-h1321-rw)
+
 ## Project Files (Windows Only): 
 
 Download the files and execute the **MetaBank.exe** file inside
 
-- [https://drive.google.com/file/d/1tKV3krqyKkr05mteFLBf9gKJYJxn97q3/view?usp=sharing](https://drive.google.com/file/d/1tKV3krqyKkr05mteFLBf9gKJYJxn97q3/view?usp=sharing)
+- [https://drive.google.com/file/d/1Y58LP8kJzCCBxd0a80I92Y0aQ4txljTh/view?usp=sharing](https://drive.google.com/file/d/1Y58LP8kJzCCBxd0a80I92Y0aQ4txljTh/view?usp=sharing);
+
+## Presentation
+
+- [https://docs.google.com/presentation/d/1NF3RZ70N3r2fzkEDWjZJ9HyoTC_yQSt9SyoQeZqJrA8/edit?usp=sharing](https://docs.google.com/presentation/d/1NF3RZ70N3r2fzkEDWjZJ9HyoTC_yQSt9SyoQeZqJrA8/edit?usp=sharing)
 
 # Controls
 
