@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import './App.css';
-import Axios from 'axios';
+import 'bulma/css/bulma.min.css';
 import Chart from "react-google-charts";
-
+import { Form, Button, Icon, Card, Media, Image, Heading, Content } from 'react-bulma-components';
 const movementsData = require('./dummy/movements.json');
 const accountsData = require('./dummy/accounts.json');
 const dateOptions = {
@@ -11,60 +11,261 @@ const dateOptions = {
 }
 
 function App() {
-  const [movementsByMonth, setMovementsByMonth] = useState({});
+  // STATEh
+  const [movementsByMonth, setMovementsByMonth] = useState(null);
   const [pieData, setPieData] = useState([]);
+  const [session, setSession] = useState({})
+  const [username, setUsername] = useState(null);
+  const [accountCards, setAccountCards] = useState([])
+  const [currentAccount, setCurrentAccount] = useState(null);
+  const [categories, setCategories] = useState({});
 
+  // LOGIN COMPONENT
+  const handleLogin = (evt) => {
+    evt.preventDefault();
+    const usr = evt.target[0].value;
+    const pwd = evt.target[1].value;
 
-  useEffect(async () => {
-    const movementsByMonthCopy = movementsByMonth;
+    const url = "https://banking.sandbox.prometeoapi.com/login/";
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", url);
 
-    const options = {
-      url: 'https://banking.sandbox.prometeoapi.com/login/',
-      method: 'POST',
-      mode: 'cors',
-      body: `provider=${process.env.REACT_APP_provider}&username=${process.env.user}&password=${process.env.pwd}&type=`,
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'X-API-Key': `${process.env.REACT_APP_API}`,
-        'Access-Control-Allow-Origin': '*',
-      },
+    xhr.setRequestHeader("accept", "application/json");
+    xhr.setRequestHeader("X-API-Key", process.env.REACT_APP_API);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
+          setUsername(usr)
+          setSession({ key: JSON.parse(xhr.responseText).key })
+        }
+      }
     };
 
-    /* Getting Blocke by CORS */
-    let response = await Axios(options);
-    let responseOK = response && response.status === 200 && response.statusText === 'OK';
-    if (responseOK) {
-      let data = await response.data;
-      console.log('Quick Test')
-      console.log(data)
+    const data = `provider=test&username=${usr}&password=${pwd}&type=`;
+
+    xhr.send(data);
+  };
+
+  const LoginForm = () => {
+    return (
+      <form onSubmit={(evt) => handleLogin(evt)}>
+        <Form.Field>
+          <Form.Label className='has-text-white'>Username</Form.Label>
+          <Form.Control>
+            <Form.Input placeholder="Prometeo" name="name" value={username} className='has-text-weight-bold' />
+            <Icon align="left">
+              <i className="github" />
+            </Icon>
+          </Form.Control>
+        </Form.Field>
+        <Form.Field>
+          <Form.Label className='has-text-white'>Password</Form.Label>
+          <Form.Control>
+            <Form.Input placeholder="**********" name="password" type="password" className='has-text-weight-bold' />
+            <Icon align="left">
+              <i className="github" />
+            </Icon>
+          </Form.Control>
+        </Form.Field>
+        <Button.Group>
+          <Button fullwidth rounded color="primary" className='has-text-weight-bold' >Login</Button>
+        </Button.Group>
+      </form>
+    );
+  };
+
+  // Account Components
+  const getAccounts = () => {
+    let response = null;
+    var url = `https://banking.sandbox.prometeoapi.com/account/?key=${session.key}`;
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", url);
+
+    xhr.setRequestHeader("accept", "application/json");
+    xhr.setRequestHeader("X-API-Key", process.env.REACT_APP_API);
+
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4) {
+        response = JSON.parse(xhr.responseText);
+        setAccountCards(response.accounts);
+      }
+    };
+
+    xhr.send();
+  };
+
+  const renderAccounts = () => {
+    if (pieData.length > 0) return null;
+
+    const accountElements = accountCards.map((acc) => {
+      const imgSrc = `${process.env.PUBLIC_URL}/images/${acc.currency}.png`;
+
+      return (
+        <Card style={{ width: 300, margin: '20px' }}>
+          <Card.Content>
+            <Media>
+              <Media.Item renderAs="figure" align="left">
+                <Image
+                  size={64}
+                  alt={acc.currency}
+                  src={imgSrc}
+                />
+              </Media.Item>
+              <Media.Item>
+                <Heading size={4} className='has-text-weight-bold'>{acc.name}</Heading>
+                <Heading subtitle size={6} className='has-text-weight-bold'>
+                  Main currency: {acc.currency}
+                </Heading>
+              </Media.Item>
+            </Media>
+            <Content>
+              {acc.currency === 'USD' ?
+                <Button fullwidth rounded color="primary" className='has-text-weight-bold' accountnumber={acc.number} accountcurrency={acc.currency} onClick={(evt) => handleAccountSteup(evt)}>View Account #{acc.number}</Button>
+                :
+                <Button fullwidth rounded color="dark" className='has-text-weight-bold' onClick={(evt) => evt.preventDefault()}>Unavailable #{acc.number}</Button>
+              }
+            </Content>
+          </Card.Content>
+        </Card>
+      );
+    });
+    return (
+      <>
+        <p>Welcome {username}!</p>
+        <p>Select an account</p>
+        {accountElements}
+      </>
+    )
+  };
+
+  // Category Helpers
+  const CategorizeMovement = (string) => {
+    const TransportationRegEx = new RegExp(/uber|didi|ancap|parking|lime|bike share/gmi);
+    const RestaurantesRegEx = new RegExp(/uber eats|starbucks|chipotle|rest|restaurant|restaurante|pizza|sbarro|cafe|confiteria|la|bar|el|las|gourmet|pizzeria|sushi|subway/gmi);
+    const PharmacyRegEx = new RegExp(/farma|pharmacy|optica|drugs|homeopa|medico|clinica|life|gym/gmi);
+    const PetRegEx = new RegExp(/pet|veterinaria|vet/gmi);
+    const HotelRegEx = new RegExp(/airbnb|aerolinea|aerolineas|hotel|air|aerop|viaje|viajes|terminal|hyatt/gmi);
+    const ServicesRegEx = new RegExp(/grammarly|netflix|youtube|google|face|linkedin|subscription|suscripciones|msft|microsoft|antel|heroku|t-mobile|godaddy|roblox|spotify|dropbox|hadfyx/gmi)
+    const IncomeRegExp = new RegExp(/deposito|sueldos|sueldo|rediva|traspaso|cre|pago|pagos/gmi);
+    const ExpensesRegExp = new RegExp(/retiro|dispensador|cobro|cuota|debito|cajero|deb.|factura/gmi);
+    const CurrencyRegExp = new RegExp(/cambiosst|hitbtc/gmi);
+    const ShoppingRegExp = new RegExp(/paypal|.com|zara|mac|shop|duty|amazon|mercadopago|bershka|online|tienda|marshalls|edreams|amzn|perfumeria|beauty|lenceria/gmi);
+    const FoodRegExp = new RegExp(/autoservice|hela|supercenter|supermercado|pedidosya|carniceria|merca|food|panaderia|supermarket|wallgreens/gmi)
+    const entertainmentRegExp = new RegExp(/movie|cine|cinema|cirque|golf/gmi);
+    const savingsRegExp = new RegExp(/ahorro|savings|investment/gmi);
+
+    if (savingsRegExp.test(string)) {
+      return 'Savings';
     }
 
-    //console.log(movementsData)
+    if (RestaurantesRegEx.test(string)) {
+      return 'Restaurants';
+    }
 
-    movementsData.movements.forEach((movement) => {
-      const newDataFormat = changeDateFormat(movement.date)
-      const movementDate = new Date(newDataFormat).toLocaleDateString('en-US', dateOptions);
+    if (TransportationRegEx.test(string)) {
+      return 'Transportation & Gas';
+    }
 
-      let monthExist = movementsByMonthCopy.hasOwnProperty(movementDate);
+    if (PharmacyRegEx.test(string)) {
+      return 'Health';
+    }
 
-      if (!monthExist) {
-        movementsByMonthCopy[movementDate] = { total: 0 };
+    if (HotelRegEx.test(string)) {
+      return 'Travel';
+    }
+
+    if (PetRegEx.test(string)) {
+      return 'Pets';
+    }
+
+    if (ServicesRegEx.test(string)) {
+      return 'Subscriptions and Services'
+    }
+
+    if (CurrencyRegExp.test(string)) {
+      return 'Currency Exchange'
+    }
+
+    if (IncomeRegExp.test(string)) {
+      return 'Income'
+    }
+
+    if (ExpensesRegExp.test(string)) {
+      return 'Payments & Withdrawals'
+    }
+
+    if (ShoppingRegExp.test(string)) {
+      return 'Shopping'
+    }
+
+    if (FoodRegExp.test(string)) {
+      return 'Groceries & Food'
+    }
+
+    if (entertainmentRegExp.test(string)) {
+      return 'Entertainment';
+    }
+
+    return 'Other';
+  };
+
+  // Chart Data 
+  const handleAccountSteup = (evt) => {
+    evt.preventDefault();
+    const selectedAccount = evt.target.getAttribute('accountnumber');
+    const selectedCurrency = evt.target.getAttribute('accountcurrency');
+    const termsDictionary = {};
+
+    var url = `https://banking.sandbox.prometeoapi.com/account/${selectedAccount}/movement/?currency=${selectedCurrency}&date_start=01%2F08%2F2021&date_end=01%2F11%2F2021&key=${session.key}`;
+
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", url);
+
+    xhr.setRequestHeader("accept", "application/json");
+    xhr.setRequestHeader("X-API-Key", process.env.REACT_APP_API);
+
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4) {
+        setCurrentAccount(selectedCurrency);
+
+        const movementsByMonthCopy = JSON.parse(xhr.responseText);
+        //  CREATE CATEGORIES AND GET MONTHLY EXPENSES
+        movementsData.movements.forEach((movement) => {
+          const newDataFormat = changeDateFormat(movement.date)
+          const movementDate = new Date(newDataFormat).toLocaleDateString('en-US', dateOptions);
+          const debitAmount = parseFloat(movement.debit) || 0;
+          const creditAmount = parseFloat(movement.creidt) || 0;
+          const totalSum = debitAmount + creditAmount;
+
+          let monthExist = movementsByMonthCopy.hasOwnProperty(movementDate);
+          let descriptionExist = termsDictionary.hasOwnProperty(CategorizeMovement(movement.detail));
+
+          if (!descriptionExist) {
+            termsDictionary[CategorizeMovement(movement.detail)] = { total: 0, movements: [] }
+          }
+
+          termsDictionary[CategorizeMovement(movement.detail)].movements.push(movement.detail);
+          termsDictionary[CategorizeMovement(movement.detail)].total = totalSum + termsDictionary[CategorizeMovement(movement.detail)].total;
+
+          if (!monthExist) {
+            movementsByMonthCopy[movementDate] = { total: 0 };
+          }
+
+          movementsByMonthCopy[movementDate].total = debitAmount + parseFloat(movementsByMonthCopy[movementDate].total);
+
+        });
+        console.log(movementsByMonthCopy)
+        console.log(termsDictionary)
+        setCategories(termsDictionary)
+        setMovementsByMonth(movementsByMonthCopy);
       }
+    };
 
-      movementsByMonthCopy[movementDate].total = movement.debit + parseFloat(movementsByMonthCopy[movementDate].total);
-
-    });
-
-    setMovementsByMonth(movementsByMonthCopy);
-    setupPiechart()
-  }, [movementsByMonth])
-
-  const changeDateFormat = (dateString) => {
-    const dateParts = dateString.split('/');
-    const newDateObj = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
-
-    return newDateObj;
+    xhr.send();
   };
 
   const setupPiechart = () => {
@@ -74,34 +275,122 @@ function App() {
       pieDataCopy.push([key, parseFloat(value.total, 10)])
     });
 
-    pieDataCopy.unshift(['Month', 'Expenses'])
+    pieDataCopy.unshift(['Expenses', 'Category'])
 
     setPieData(pieDataCopy);
   };
 
+  const setupCategoryElements = () => {
+    const catObj = categories;
+    const incomeData = catObj.Income.total;
+    const income50 = incomeData * 0.5;
+    const income30 = incomeData * 0.3;
+    const income20 = incomeData * 0.2;
+    const currencyOptions = {
+      style: "currency",
+      currency: "USD"
+    };
+
+    const CategoriesBySpending = Object.entries(catObj).sort((catA, catB) => catB[1].total - catA[1].total);
+    const livingCost = catObj['Transportation & Gas'].total + catObj['Groceries & Food'].total;
+    const entertainmentCost = catObj['Entertainment'].total + catObj['Restaurants'].total;
+    const savingAccount = catObj['Savings'].total;
+
+    const RankElements = CategoriesBySpending.map((category) => {
+      return (
+        <li>{category[0]}</li>
+      )
+    });
+
+    return (
+      <>
+        <h2>Your TOP Categories</h2>
+        <p>Income: {incomeData.toLocaleString('default', currencyOptions)}</p>
+        <div className="table-container">
+          <table className="table">
+            <thead>
+              <th>Highest</th>
+              <th>Lowest</th>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{CategoriesBySpending[0][0]}</td>
+                <td>{CategoriesBySpending[CategoriesBySpending.length - 1][0]}</td>
+              </tr>
+              <tr>
+                <td>{CategoriesBySpending[1][0]}</td>
+                <td>{CategoriesBySpending[CategoriesBySpending.length - 2][0]}</td>
+              </tr>
+              <tr>
+                <td>{CategoriesBySpending[2][0]}</td>
+                <td>{CategoriesBySpending[CategoriesBySpending.length - 3][0]}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <h2 className='has-text-weight-bold'>Insights</h2>
+        {income50 < livingCost && <p><b>Transport & Gas</b>, <b>Groceries</b> and <b>Rent</b> Spending is above 50%</p>}
+        {income30 < entertainmentCost && <p><b>Restaurants</b> and <b>Entertainment</b> Spending is above 30%</p>}
+        {income20 > savingAccount && <p>You should be saving at least <b>20%</b> of your income!</p>}
+        <br />
+        <p className='has-text-weight-bold'>Use the 50/30/20 rule to improve your finances!</p>
+        <br/>
+        <h1>Scroll for more details:</h1>
+        <br />
+        <h2 className='has-text-weight-bold'>All Categories</h2>
+        <div className='content'>
+          <ul type='1'>
+            {RankElements}
+          </ul>
+        </div>
+        <h2 className='has-text-weight-bold'>Monthly expenses chart</h2>
+        <br/>
+      </>
+    )
+  };
+
+  useEffect(() => {
+    if (movementsByMonth) setupPiechart();
+    getAccounts();
+  }, [movementsByMonth, session, currentAccount])
+
+  const changeDateFormat = (dateString) => {
+    const dateParts = dateString.split('/');
+    const newDateObj = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
+
+    return newDateObj;
+  };
 
   return (
     <div className="App">
       <header className="App-header">
-        <p>Welcome {process.env.REACT_APP_user}!</p>
-
-        <Chart
-          width={'100%'}
-          height={'550px'}
-          chartType="PieChart"
-          loader={<div>Loading Chart</div>}
-          data={pieData}
-          options={{
-            title: 'Monthly Expenses',
-            // Just add this option
-            pieHole: 0.2,
-          }}
-          rootProps={{ 'data-testid': '3' }}
-        />
-
+        {/* Chart */}
+        {pieData.length > 0 && (
+          <>
+            {setupCategoryElements()}
+            <Chart
+              width={'100%'}
+              height={'550px'}
+              chartType="PieChart"
+              loader={<div>Loading Chart</div>}
+              data={pieData}
+              options={{
+                title: 'Monthly Expenses',
+                // Just add this option
+                pieHole: 0.2,
+              }}
+              rootProps={{ 'data-testid': '3' }}
+            />
+          </>
+        )}
+        {/* Available Accounts */}
+        {accountCards && renderAccounts()}
+        {/* LOGIN FORM */}
+        {!session.key && LoginForm()}
       </header>
     </div>
   );
 }
+
 
 export default App;
