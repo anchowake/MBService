@@ -23,12 +23,15 @@ Download the files and execute the **MetaBank.exe** file inside
 
 - **Mouse** - Interact with Dashboard, *If you walk closer to the screen you can interact with the dashboard*
 - **Keyboard** - You can type in the text fields that are in the dashboard
+- **Scroll wheel** - You can scroll LOL!
 
 # TODO
 - Base VR Env - Done
 - Login Form - DONE
 - Select Account to Display Component - DONE
-- Expenses by Category - WIP
-- Saving Tips 
-- Polish VR Env
+- Expenses by Category - DONE
+- Basic Saving Insights - DONE
+- Polish VR Env - DONE
 - Discord BUTLR (Nice to have)
+- DRY CODE
+- Better REGEX for Categories
