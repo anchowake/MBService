@@ -3,8 +3,8 @@ import './App.css';
 import 'bulma/css/bulma.min.css';
 import Chart from "react-google-charts";
 import { Form, Button, Icon, Card, Media, Image, Heading, Content } from 'react-bulma-components';
-const movementsData = require('./dummy/movements.json');
-const accountsData = require('./dummy/accounts.json');
+// const movementsData = require('./dummy/movements.json');
+// const accountsData = require('./dummy/accounts.json');
 const dateOptions = {
   year: 'numeric',
   month: 'long',
@@ -144,25 +144,22 @@ function App() {
   // Category Helpers
   const CategorizeMovement = (string) => {
     const TransportationRegEx = new RegExp(/uber|didi|ancap|parking|lime|bike share/gmi);
-    const RestaurantesRegEx = new RegExp(/uber eats|starbucks|chipotle|rest|restaurant|restaurante|pizza|sbarro|cafe|confiteria|la|bar|el|las|gourmet|pizzeria|sushi|subway/gmi);
-    const PharmacyRegEx = new RegExp(/farma|pharmacy|optica|drugs|homeopa|medico|clinica|life|gym/gmi);
+    const RestaurantesRegEx = new RegExp(/starbucks|chipotle|rest|restaurant|restaurante|pizza|sbarro|cafe|confiteria|las|gourmet|pizzeria|sushi|subway|pita/gmi);
+    const PharmacyRegEx = new RegExp(/farma|pharmacy|optica|drugs|homeopa|medico|clinica|life|gym|clinca/gmi);
     const PetRegEx = new RegExp(/pet|veterinaria|vet/gmi);
-    const HotelRegEx = new RegExp(/airbnb|aerolinea|aerolineas|hotel|air|aerop|viaje|viajes|terminal|hyatt/gmi);
-    const ServicesRegEx = new RegExp(/grammarly|netflix|youtube|google|face|linkedin|subscription|suscripciones|msft|microsoft|antel|heroku|t-mobile|godaddy|roblox|spotify|dropbox|hadfyx/gmi)
+    const HotelRegEx = new RegExp(/airbnb|aerolinea|aerolineas|hotel|air|aerop|viaje|viajes|terminal|hyatt|internationa/gmi);
+    const ServicesRegEx = new RegExp(/grammarly|netflix|youtube|google|face|linkedin|subscription|suscripciones|msft|microsoft|antel|heroku|t-mobile|godaddy|roblox|spotify|dropbox|hadfyx|hosting/gmi)
     const IncomeRegExp = new RegExp(/deposito|sueldos|sueldo|rediva|traspaso|cre|pago|pagos/gmi);
-    const ExpensesRegExp = new RegExp(/retiro|dispensador|cobro|cuota|debito|cajero|deb.|factura/gmi);
+    const ExpensesRegExp = new RegExp(/retiro|dispensador|cobro|cuota|debito|cajero|deb.|factura|cargo/gmi);
     const CurrencyRegExp = new RegExp(/cambiosst|hitbtc/gmi);
-    const ShoppingRegExp = new RegExp(/paypal|.com|zara|mac|shop|duty|amazon|mercadopago|bershka|online|tienda|marshalls|edreams|amzn|perfumeria|beauty|lenceria/gmi);
-    const FoodRegExp = new RegExp(/autoservice|hela|supercenter|supermercado|pedidosya|carniceria|merca|food|panaderia|supermarket|wallgreens/gmi)
-    const entertainmentRegExp = new RegExp(/movie|cine|cinema|cirque|golf/gmi);
+    const ShoppingRegExp = new RegExp(/paypal|.com|zara|mac|shop|duty|amazon|mercadopago|bershka|online|tienda|marshalls|edreams|amzn|perfumeria|beauty|lenceria|.co|.ro|boutique/gmi);
+    const FoodRegExp = new RegExp(/autoservice|hela|supercenter|supermercado|pedidosya|carniceria|merca|food|panaderia|supermarket|wallgreens|rappi/gmi)
+    const entertainmentRegExp = new RegExp(/movie|cine|cinema|cirque|golf|disco/gmi);
     const savingsRegExp = new RegExp(/ahorro|savings|investment/gmi);
+    const homeImprovementRegExp = new RegExp(/pintura|ferreteria|home|haus/gmi)
 
     if (savingsRegExp.test(string)) {
       return 'Savings';
-    }
-
-    if (RestaurantesRegEx.test(string)) {
-      return 'Restaurants';
     }
 
     if (TransportationRegEx.test(string)) {
@@ -209,7 +206,15 @@ function App() {
       return 'Entertainment';
     }
 
-    return 'Other';
+    if(homeImprovementRegExp.test(string)){
+      return 'Home Improvement';
+    }
+
+    if (RestaurantesRegEx.test(string)) {
+      return 'Restaurants';
+    }
+
+    return 'Entertainment';
   };
 
   // Chart Data 
@@ -234,7 +239,7 @@ function App() {
 
         const movementsByMonthCopy = JSON.parse(xhr.responseText);
         //  CREATE CATEGORIES AND GET MONTHLY EXPENSES
-        movementsData.movements.forEach((movement) => {
+        movementsByMonthCopy.movements.forEach((movement) => {
           const newDataFormat = changeDateFormat(movement.date)
           const movementDate = new Date(newDataFormat).toLocaleDateString('en-US', dateOptions);
           const debitAmount = parseFloat(movement.debit) || 0;
@@ -331,7 +336,7 @@ function App() {
         <h2 className='has-text-weight-bold'>Insights</h2>
         {income50 < livingCost && <p><b>Transport & Gas</b>, <b>Groceries</b> and <b>Rent</b> Spending is above 50%</p>}
         {income30 < entertainmentCost && <p><b>Restaurants</b> and <b>Entertainment</b> Spending is above 30%</p>}
-        {income20 > savingAccount && <p>You should be saving at least <b>20%</b> of your income!</p>}
+        {income20 > savingAccount ? <p>You should be saving at least <b>20%</b> of your income!</p> : <p className='has-text-weight-bold'>You're saving money like a CHAMP!!!</p>}
         <br />
         <p className='has-text-weight-bold'>Use the 50/30/20 rule to improve your finances!</p>
         <br/>
