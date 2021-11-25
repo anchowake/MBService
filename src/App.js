@@ -49,8 +49,10 @@ function App() {
   };
 
   const LoginForm = () => {
+    const bankLogo = `${process.env.PUBLIC_URL}/images/logo-INVERT.png`;
     return (
       <form onSubmit={(evt) => handleLogin(evt)}>
+        <img width='300px' src={bankLogo}/>
         <Form.Field>
           <Form.Label className='has-text-white'>Username</Form.Label>
           <Form.Control>
