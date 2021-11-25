@@ -206,7 +206,7 @@ function App() {
       return 'Entertainment';
     }
 
-    if(homeImprovementRegExp.test(string)){
+    if (homeImprovementRegExp.test(string)) {
       return 'Home Improvement';
     }
 
@@ -235,7 +235,7 @@ function App() {
 
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4) {
-        setCurrentAccount(selectedCurrency);
+        setCurrentAccount(selectedAccount);
 
         const movementsByMonthCopy = JSON.parse(xhr.responseText);
         //  CREATE CATEGORIES AND GET MONTHLY EXPENSES
@@ -307,15 +307,32 @@ function App() {
       )
     });
 
+    const renderCard = (color, content) => {
+      const colorClass = `message ${color}`;
+      return (
+        <article style={{width: '90%'}} class={colorClass}>
+          <div class="message-body">
+            {content}
+          </div>
+        </article>
+      )
+    };
+
     return (
       <>
-        <h2>Your awesome dashboard - MetaBank</h2>
-        <p>Transactions received: {incomeData.toLocaleString('default', currencyOptions)}</p>
+        <br/>
+        <h2 className='has-text-light'>
+          MetaBank Analytics | Account N. <span className='has-text-primary'>{currentAccount}</span><br/><br/>
+          <span className='has-text-info'>Current Balance</span>: {incomeData.toLocaleString('default', currencyOptions)}
+        </h2>
+        <br/>
+        <h5 className='has-text-light  is-uppercase has-text-primary'>TOP 3 CATEGORIES</h5>
+        <br/>
         <div className="table-container">
-          <table className="table">
+          <table className="table is-bordered is-striped is-hoverable is-narrow">
             <thead>
-              <th>Highest</th>
-              <th>Lowest</th>
+              <th>Most Expenses</th>
+              <th>Least Expenses</th>
             </thead>
             <tbody>
               <tr>
@@ -333,23 +350,38 @@ function App() {
             </tbody>
           </table>
         </div>
-        <h2 className='has-text-weight-bold'>Insights</h2>
-        {income50 < livingCost && <p><b>Transport & Gas</b>, <b>Groceries</b> and <b>Rent</b> Spending is above 50%</p>}
-        {income30 < entertainmentCost && <p><b>Restaurants</b> and <b>Entertainment</b> Spending is above 30%</p>}
-        {income20 > savingAccount ? <p>You should be saving at least <b>20%</b> of your income!</p> : <p className='has-text-weight-bold'>You're saving money like a CHAMP!!!</p>}
-        <br />
-        <p className='has-text-weight-bold'>Use the 50/30/20 rule to improve your finances!</p>
+        <h5 className='has-text-light  is-uppercase has-text-primary'>SAVING INSIGHTS</h5>
         <br/>
-        <h1>Scroll for more details:</h1>
+        {income50 < livingCost && (
+          renderCard('is-danger', <p><strong>Transport & Gas</strong>, <strong>Groceries</strong> and <strong>Rent</strong> Spending is above <strong>50%</strong></p>)
+        )}
+
+        {income30 < entertainmentCost && (
+          renderCard('is-danger', <p><strong>Restaurants</strong> and <strong>Entertainment</strong> Spending is above <strong>30%</strong></p>)
+        )}
+
+        {income20 > savingAccount ? (
+          renderCard('is-danger', <p>You should be <strong>SAVING</strong> at least <strong>20%</strong> of your income!</p>)
+        ) : renderCard('is-success', <p className='has-text-weight-bold'>You're saving money like a CHAMP!!!</p>)}
+        
+        <article class="message is-link is-uppercase">
+          <div class="message-header">
+            <p className='has-text-weight-bold'>Keep in mind the 50/30/20 rules!</p>
+          </div>
+        </article>
+       
         <br />
-        <h2 className='has-text-weight-bold'>All Categories</h2>
+        <h1 className=' is-uppercase'>Scroll for more details:</h1>
+        <br />
+        <h2 className='has-text-primary is-uppercase'>Categories rank by expenses</h2>
         <div className='content'>
-          <ul type='1'>
+          <ol className='has-text-left' type='1'>
             {RankElements}
-          </ul>
+          </ol>
         </div>
-        <h2 className='has-text-weight-bold'>Monthly expenses chart</h2>
-        <br/>
+        <br />
+        <h2 className='is-uppercase has-text-primary'>Monthly expenses chart</h2>
+        <br />
       </>
     )
   };
