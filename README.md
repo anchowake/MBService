@@ -1,19 +1,23 @@
 # Meta Bank - VR Finance Experience (Windows Only)
 
-**Goal**: VR Enabled environment where a user can check his finances, 
-**Description**: The POC Level has a TV that shows a dashboard with the current year months expenses from the target period.
+**Goal**: VR Enabled environment where a user can check his finances health and insights by our agent. 
+**Description**: The POC Level has a TV that shows a dashboard with the user monthly movements, crunches the data and offers insights based on the categories that the user spends the most and the least.
 
 **TLDR**: A VR / Metaverse Bank Dashboard.
 
 ![MetaBank](https://lh6.googleusercontent.com/1kgbQRg5nGNbN_IwK4jng-VE_269TKkIBjgtNvjBBrfuiAwSCcEX5vQrcC7OYcgbLSrQUaZb25Q-VGq67BKQ=w2560-h1321-rw)
 
-## Project Files (Windows Only): 
+# Project Files (Windows Only): 
 
 Download the files and execute the **MetaBank.exe** file inside
 
-- [https://drive.google.com/file/d/1Y58LP8kJzCCBxd0a80I92Y0aQ4txljTh/view?usp=sharing](https://drive.google.com/file/d/1Y58LP8kJzCCBxd0a80I92Y0aQ4txljTh/view?usp=sharing);
+### Original Version [DEPRECATED]}
+- [https://drive.google.com/file/d/DEPRECATED/view?usp=sharing](#byebye);
 
-## Presentation
+### Version 3.0.0
+- [https://drive.google.com/file/d/1Su1DKZ8BKv62izVhSQ_v8dJPlvEYFuk8/view?usp=sharing](https://drive.google.com/file/d/1Su1DKZ8BKv62izVhSQ_v8dJPlvEYFuk8/view?usp=sharing);
+
+# Presentation
 
 - [https://docs.google.com/presentation/d/1NF3RZ70N3r2fzkEDWjZJ9HyoTC_yQSt9SyoQeZqJrA8/edit?usp=sharing](https://docs.google.com/presentation/d/1NF3RZ70N3r2fzkEDWjZJ9HyoTC_yQSt9SyoQeZqJrA8/edit?usp=sharing)
 
@@ -38,6 +42,7 @@ Download the files and execute the **MetaBank.exe** file inside
 - Expenses by Category - DONE
 - Basic Saving Insights - DONE
 - Polish VR Env - DONE
+- ????
 - Discord BUTLR (Nice to have)
 - DRY CODE
 - Better REGEX for Categories
