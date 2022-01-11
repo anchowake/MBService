@@ -7,7 +7,7 @@
 
 # MetaBank - VR Finance Experience
 
-MetaBank is a **VR/Game** POC designed for the **Ignite Open Banking Hackathon** to show the capabilities of using banking services with VR applications, it's a simple implementaton of financial rules and algorithms to showcase the reach and value this type of solutions can bring in the future.
+MetaBank is a **VR/Game** POC designed for the **Ignite Open Banking Hackathon** to show the capabilities of using banking services with VR applications, it's a simple implementation of financial rules and algorithms to showcase the reach and value this type of solutions can bring in the future.
 
 **Goal**: VR Enabled environment where a user can check his finances, financial health and insights.  
 
