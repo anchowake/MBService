@@ -37,7 +37,7 @@ Download the files and execute the **MetaBank.exe** file inside
 - **Scroll wheel** - You can scroll LOL!    
 
 # Media
-- [Así se vivió Ignite - Prometeo, Dec 9, 2021](https://prometeoopenbanking.medium.com/as%C3%AD-se-vivi%C3%B3-ignite-36cf01dec347)
+- TBA
 
 # Stack
 - Unreal Engine 4
