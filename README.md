@@ -1,48 +1,47 @@
-# Meta Bank - VR Finance Experience (Windows Only)
+![MetaBank](MetaBank.jpg)
 
-**Goal**: VR Enabled environment where a user can check his finances health and insights by our agent. 
-**Description**: The POC Level has a TV that shows a dashboard with the user monthly movements, crunches the data and offers insights based on the categories that the user spends the most and the least.
+![Place:Winner](https://img.shields.io/badge/Place-1st-blue?style=for-the-badge)
+![Vertical: New Channels](https://img.shields.io/badge/Vertical-New%20Channels-blue?style=for-the-badge)
+![Hackathon: Ignite Open Banking by Prometeo](https://img.shields.io/badge/Hackathon-Ignite%20Open%20Banking%20by%20Prometeo-red?style=for-the-badge) 
+
+
+# MetaBank - VR Finance Experience
+
+MetaBank is a **VR/Game** POC designed for the **Ignite Open Banking Hackathon** to show the capabilities of using banking services with VR applications, it's a simple implementaton of financial rules and algorithms to showcase the reach and value this type of solutions can bring in the future.
+
+**Goal**: VR Enabled environment where a user can check his finances, financial health and insights.  
+
+**Description**: The POC Level has a screen that shows a dashboard with the user monthly movements, the code crunches the data and offers insights based on the categories that the user spends the most and the least.
 
 **TLDR**: A VR / Metaverse Bank Dashboard.
 
-![MetaBank](https://lh6.googleusercontent.com/1kgbQRg5nGNbN_IwK4jng-VE_269TKkIBjgtNvjBBrfuiAwSCcEX5vQrcC7OYcgbLSrQUaZb25Q-VGq67BKQ=w2560-h1321-rw)
-
-# Project Files (Windows Only): 
+#  DEMO - Project Files (Windows Only): 
 
 Download the files and execute the **MetaBank.exe** file inside
 
-### Original Version [DEPRECATED]}
-- [https://drive.google.com/file/d/DEPRECATED/view?usp=sharing](#byebye);
-
 ### Version 3.0.0
-- [https://drive.google.com/file/d/1Su1DKZ8BKv62izVhSQ_v8dJPlvEYFuk8/view?usp=sharing](https://drive.google.com/file/d/1Su1DKZ8BKv62izVhSQ_v8dJPlvEYFuk8/view?usp=sharing);
-
-# Presentation
-
-- [https://docs.google.com/presentation/d/1NF3RZ70N3r2fzkEDWjZJ9HyoTC_yQSt9SyoQeZqJrA8/edit?usp=sharing](https://docs.google.com/presentation/d/1NF3RZ70N3r2fzkEDWjZJ9HyoTC_yQSt9SyoQeZqJrA8/edit?usp=sharing)
+- [https://drive.google.com/file/d/1Su1DKZ8BKv62izVhSQ_v8dJPlvEYFuk8/view?usp=sharing](https://drive.google.com/file/d/1Su1DKZ8BKv62izVhSQ_v8dJPlvEYFuk8/view?usp=sharing)
 
 # Controls
 
-## Normal
+## On Foot
 
-- **ESC** - Close MetaBank
+- **ESC** - Close Application
 - **WASD** - Movement
 - **Mouse** - Look Around
 
-## Close to the Display
+## Screen Interaction- *If you walk closer to the screen you can interact with the dashboard*
 
-- **Mouse** - Interact with Dashboard, *If you walk closer to the screen you can interact with the dashboard*
+- **Mouse** - Interact with Dashboard
 - **Keyboard** - You can type in the text fields that are in the dashboard
-- **Scroll wheel** - You can scroll LOL!
+- **Scroll wheel** - You can scroll LOL!    
 
-# TODO
-- Base VR Env - Done
-- Login Form - DONE
-- Select Account to Display Component - DONE
-- Expenses by Category - DONE
-- Basic Saving Insights - DONE
-- Polish VR Env - DONE
-- ????
-- Discord BUTLR (Nice to have)
-- DRY CODE
-- Better REGEX for Categories
+# Media
+- [Así se vivió Ignite - Prometeo, Dec 9, 2021](https://prometeoopenbanking.medium.com/as%C3%AD-se-vivi%C3%B3-ignite-36cf01dec347)
+
+# Stack
+- Unreal Engine 4
+- Javscript
+- Node.js
+- Prometeo API
+
