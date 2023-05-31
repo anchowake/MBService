@@ -20,7 +20,7 @@ MetaBank is a **VR/Game** POC designed for the **Ignite Open Banking Hackathon**
 Download the files and execute the **MetaBank.exe** file inside
 
 ### Version 3.0.0
-- [https://drive.google.com/file/d/1Su1DKZ8BKv62izVhSQ_v8dJPlvEYFuk8/view?usp=sharing](https://drive.google.com/file/d/1Su1DKZ8BKv62izVhSQ_v8dJPlvEYFuk8/view?usp=sharing)
+- [https://mega.nz/file/ihg1jZ6Y#HrTRkFI7KmyTedml-kHVE3w4BrutWRKLekAl-Y6ZeZg](https://mega.nz/file/ihg1jZ6Y#HrTRkFI7KmyTedml-kHVE3w4BrutWRKLekAl-Y6ZeZg)
 
 # Controls
 
