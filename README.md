@@ -5,7 +5,7 @@
 ![Hackathon: Ignite Open Banking by Prometeo](https://img.shields.io/badge/Hackathon-Ignite%20Open%20Banking%20by%20Prometeo-red?style=for-the-badge) 
 
 
-# MetaBank - VR Finance Experience
+# MetaBank - VR Finance Experience [object Object]
 
 MetaBank is a **VR/Game** POC designed for the **Ignite Open Banking Hackathon** to show the capabilities of using banking services with VR applications, it's a simple implementation of financial rules and algorithms to showcase the reach and value this type of solutions can bring in the future.
 
@@ -37,7 +37,7 @@ Download the files and execute the **MetaBank.exe** file inside
 - **Scroll wheel** - You can scroll LOL!    
 
 # Media
-- TBA
+- [Así se vivió Ignite - Prometeo, Dec 9, 2021](https://prometeoopenbanking.medium.com/as%C3%AD-se-vivi%C3%B3-ignite-36cf01dec347)
 
 # Stack
 - Unreal Engine 4
